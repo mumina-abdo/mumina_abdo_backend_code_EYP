@@ -48,21 +48,25 @@ class IngredientsDetailView(APIView):
         return Response(status.HTTP_202_ACCEPTED)
 
 
-
 class PantryListView(APIView):
-    def get(self,request):
+    def get(self, request):
+        item = request.GET.get('item', None)
         pantry = Pantry.objects.all()
-        serializer = PantrySerializer(pantry,many=True)
-        return Response(serializer.data)
-    
-    def post(self,request):
+
+        if item:
+            pantry = pantry.filter(item=item)
+
+        serializer = PantrySerializer(pantry, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
         serializer = PantrySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class PantrySearchView(APIView):
     def get(self, request):
@@ -100,5 +104,4 @@ class PantryDetailView(APIView):
         pantry.delete()
         return Response(status.HTTP_202_ACCEPTED)
 
-# Create your views here.
 
