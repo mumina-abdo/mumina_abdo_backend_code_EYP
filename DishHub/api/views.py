@@ -12,7 +12,7 @@ class CategoriesListView(APIView):
             serializer = CategoriesSerializer(categories_list, many=True)
             return Response(serializer.data)
         except Exception as e:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+          return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def post(self, request):
         serializer = CategoriesSerializer(data=request.data)
@@ -21,7 +21,7 @@ class CategoriesListView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CategoriesDetailView(APIView):
+class CategoryRetrieveView(APIView):
     def get(self, request, id):
         category_instance = get_object_or_404(Category, id=id)
         serializer = CategoriesSerializer(category_instance)
