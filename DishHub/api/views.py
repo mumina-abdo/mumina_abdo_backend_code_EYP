@@ -12,7 +12,7 @@ class CategoriesListView(APIView):
             serializer = CategoriesSerializer(categories_list, many=True)
             return Response(serializer.data)
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def post(self, request):
         serializer = CategoriesSerializer(data=request.data)
