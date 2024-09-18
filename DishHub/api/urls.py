@@ -5,7 +5,7 @@ from .views import (
     FoodItemsListView,
     FoodItemsByCategoryView,
     FoodItemsInCategoryDetailView,
-    FoodItemsSearchView
+    FoodItemsSearchView 
 )
 
 urlpatterns = [
