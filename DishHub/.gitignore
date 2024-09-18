@@ -45,3 +45,8 @@ build/
 dist/
 *.egg-info/
 .eggs/
+*.bak
+*.logenv/
+*.egg
+*.sublime-project
+*.sublime-workspace
