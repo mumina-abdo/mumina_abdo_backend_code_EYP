@@ -66,17 +66,7 @@ class PantryListView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class PantrySearchView(APIView):
-    def get(self, request):
-        item = request.GET.get('item', None)
-        pantry =Pantry.objects.all()
-        if item:
-            pantry = pantry.filter(item=item)
-        serializer = PantrySerializer(pantry, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
+ 
         
 class PantryDetailView(APIView):
 
