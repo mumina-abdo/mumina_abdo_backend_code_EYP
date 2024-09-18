@@ -51,3 +51,8 @@ dist/
 *.egg
 *.sublime-project
 *.sublime-workspace
+*.tmp
+pip-log.txt
+.cache
+.pytest_cache/
+.coverage
