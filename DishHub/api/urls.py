@@ -5,7 +5,6 @@ from .views import (
     FoodItemsListView,
     FoodItemsByCategoryView,
     FoodItemsInCategoryDetailView,
-    FoodItemsSearchView 
 )
 
 urlpatterns = [
@@ -14,5 +13,5 @@ urlpatterns = [
     path('food-items/', FoodItemsListView.as_view(), name='food_items_list'),
     path('categories/<int:category_id>/food-items/', FoodItemsByCategoryView.as_view(), name='food_items_by_category'),
     path('categories/<int:category_id>/food-items/<int:food_item_id>/', FoodItemsInCategoryDetailView.as_view(), name='food_item_in_category_detail'),
-    path('categories/search/', FoodItemsSearchView.as_view(), name='food_item_search_view')
+    path('food-items/search/', FoodItemsListView.as_view(), name='food_items_search'),  # New search endpoint
 ]

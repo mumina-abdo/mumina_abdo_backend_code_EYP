@@ -37,10 +37,15 @@ class CategoriesDetailView(APIView):
     
 class FoodItemsListView(APIView):
     def get(self, request):
+        name = request.GET.get('name', None)
         food_items = FoodItem.objects.all()
+
+        if name:
+            food_items = food_items.filter(name__icontains=name)
+
         serializer = FoodItemsSerializer(food_items, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request):
         serializer = FoodItemsSerializer(data=request.data)
         if serializer.is_valid():
@@ -103,14 +108,3 @@ class FoodItemsInCategoryDetailView(APIView):
         food_item = get_object_or_404(FoodItem, id=food_item_id, category=category_instance)
         food_item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-class FoodItemsSearchView(APIView):
-    def get(self, request):
-        name = request.GET.get('name', None)
-        food_items = FoodItem.objects.all()
-
-        if name:
-            food_items = food_items.filter(name__icontains=name)
-
-        serializer = FoodItemsSerializer(food_items, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
