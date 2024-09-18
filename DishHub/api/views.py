@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,43 +8,49 @@ from pantry.models import Pantry
 
 
 class IngredientListView(APIView):
-    def get(self,request):
-        ingredient = Ingredients.objects.all()
-        serializer = IngredientSerializer(ingredient,many=True)
+    def get(self, request):
+        ingredients = Ingredients.objects.all()
+        serializer = IngredientSerializer(ingredients, many=True)
         return Response(serializer.data)
-    
-    def post(self,request):
+
+    def post(self, request):
         serializer = IngredientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class IngredientsDetailView(APIView):
-
-    def post(self, request, id):
-        ingredients = Ingredients.objects.get(id=id)
-        action = request.data.get("action")  
-
+    
     def get(self, request, id):
-        ingredients = Ingredients.objects.get(id=id)
-        serializer = IngredientSerializer(Ingredients)
-        return Response(serializer.data)    
+        try:
+            ingredient = Ingredients.objects.get(id=id)
+            serializer = IngredientSerializer(ingredient)
+            return Response(serializer.data)
+        except Ingredients.DoesNotExist:
+            return Response({"error": "Ingredient not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, pk):
-        ingredients =Ingredients.objects.get(pk = pk)
-        serializer = IngredientSerializer(ingredients, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)  
-        else:
-            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-        
+        try:
+            ingredient = Ingredients.objects.get(pk=pk)
+            serializer = IngredientSerializer(ingredient, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Ingredients.DoesNotExist:
+            return Response({"error": "Ingredient not found."}, status=status.HTTP_404_NOT_FOUND)
+
     def delete(self, request, pk):
-        ingredient = Ingredients.objects.get(pk = pk)
-        ingredient.delete()
-        return Response(status.HTTP_202_ACCEPTED)
+        try:
+            ingredient = Ingredients.objects.get(pk=pk)
+            ingredient.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Ingredients.DoesNotExist:
+            return Response({"error": "Ingredient not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PantryListView(APIView):
@@ -66,32 +71,34 @@ class PantryListView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
-        
+
+
 class PantryDetailView(APIView):
 
-    def post(self, request, pk=None):
-        pantry = Pantry.objects.get(id=id)
-        action = request.data.get("action")
-   
-
     def get(self, request, pk):
-        Pantry = Pantry.objects.get(pk=pk)
-        serializer = PantrySerializer(Pantry)
-        return Response(serializer.data)    
+        try:
+            pantry_item = Pantry.objects.get(pk=pk)
+            serializer = PantrySerializer(pantry_item)
+            return Response(serializer.data)
+        except Pantry.DoesNotExist:
+            return Response({"error": "Pantry item not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, pk):
-        pantry =Pantry.objects.get(pk=pk)
-        serializer = PantrySerializer(pantry, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)  
-        else:
-            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-        
+        try:
+            pantry_item = Pantry.objects.get(pk=pk)
+            serializer = PantrySerializer(pantry_item, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Pantry.DoesNotExist:
+            return Response({"error": "Pantry item not found."}, status=status.HTTP_404_NOT_FOUND)
+
     def delete(self, request, pk):
-        pantry = Pantry.objects.get(pk = pk)
-        pantry.delete()
-        return Response(status.HTTP_202_ACCEPTED)
-
-
+        try:
+            pantry_item = Pantry.objects.get(pk=pk)
+            pantry_item.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Pantry.DoesNotExist:
+            return Response({"error": "Pantry item not found."}, status=status.HTTP_404_NOT_FOUND)
