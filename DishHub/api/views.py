@@ -42,7 +42,6 @@ class FoodItemsListView(APIView):
 
         if name:
             food_items = food_items.filter(name__icontains=name)
-
         serializer = FoodItemsSerializer(food_items, many=True)
         return Response(serializer.data)
 
@@ -57,6 +56,10 @@ class FoodItemsByCategoryView(APIView):
     def get(self, request, category_id):
         category_instance = get_object_or_404(Category, id=category_id)
         food_items = category_instance.food_items.all()
+        name = request.GET.get('name', None) 
+        if name:
+            food_items = food_items.filter(name__icontains=name)
+
         serializer = FoodItemsSerializer(food_items, many=True)
         return Response(serializer.data)
 
@@ -67,6 +70,7 @@ class FoodItemsByCategoryView(APIView):
             food_item = serializer.save(category=category_instance)
             return Response(FoodItemsSerializer(food_item).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FoodItemsDetailView(APIView):
     def get(self, request, id):
