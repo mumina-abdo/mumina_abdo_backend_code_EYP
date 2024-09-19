@@ -37,12 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pantry',
-    'ingredients',
-    'rest_framework',
     'shopping',
-
     'api',
+    'rest_framework',
     'DishHub'
 ]
 
