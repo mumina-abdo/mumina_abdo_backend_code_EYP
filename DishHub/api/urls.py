@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.urls import path
 from .views import (
     CategoriesListView,
@@ -15,3 +16,22 @@ urlpatterns = [
     path('categories/<int:category_id>/food-items/<int:id>/', FoodItemsListView.as_view(), name='food-item-in-category-detail'),
     path('categories/<int:category_id>/food-items/create/', FoodItemDetailView.as_view(), name='food-item-create'),  
 ]
+=======
+from django.urls import path, include
+from .views import (
+    IngredientListView,
+    IngredientsDetailView,
+    PantryListView,
+    PantryDetailView
+)
+
+urlpatterns = [
+    path('ingredients/', IngredientListView.as_view(), name="ingredient_list_view"),
+    path('ingredients/<int:id>/', IngredientsDetailView.as_view(), name='ingredient-detail'),
+    path('pantry/', PantryListView.as_view(), name="pantry_list_view"),
+    path("pantry/<int:pk>/", PantryDetailView.as_view(), name='pantry-detail_view'),
+    path('pantry/ingredients/<int:pk>/', IngredientsDetailView.as_view(), name='ingredient-detail'), 
+   
+]
+
+>>>>>>> 401b08102d0a4c9e4f16ce3bf060a39920e85da9

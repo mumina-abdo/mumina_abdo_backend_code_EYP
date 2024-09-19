@@ -14,6 +14,10 @@ staticfiles/
 # Environment Files
 .env
 *.env
+<<<<<<< HEAD
+=======
+*.logenv/
+>>>>>>> 401b08102d0a4c9e4f16ce3bf060a39920e85da9
 # Virtual Environment
 venv/
 env/
@@ -44,4 +48,18 @@ coverage.xml
 build/
 dist/
 *.egg-info/
+<<<<<<< HEAD
 .eggs/
+=======
+.eggs/
+*.bak
+*.logenv/
+*.egg
+*.sublime-project
+*.sublime-workspace
+*.tmp
+pip-log.txt
+.cache
+.pytest_cache/
+.coverage
+>>>>>>> 401b08102d0a4c9e4f16ce3bf060a39920e85da9
