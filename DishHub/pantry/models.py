@@ -8,6 +8,7 @@ class Pantry(models.Model):
     item = models.CharField(max_length = 20)
     ingredient = models.ManyToManyField(Ingredients)
     users = models.CharField(max_length = 20)
+    # users = models.ManyToManyField(User)
 
 
     def __str__(self):
