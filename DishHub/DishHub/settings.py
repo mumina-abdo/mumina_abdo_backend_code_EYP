@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pantry',
     'ingredients',
-    'rest_framework'
+    'rest_framework',
+    'shopping',
+
 ]
 
 MIDDLEWARE = [
