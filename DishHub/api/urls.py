@@ -1,17 +1,17 @@
 from django.urls import path
 from .views import (
     CategoriesListView,
-    CategoryRetrieveView,
+    CategoryDetailView,
     FoodItemsListView,
-    FoodItemsByCategoryView,
-    FoodItemsInCategoryDetailView,
+    FoodItemDetailView,  
 )
 
 urlpatterns = [
     path('categories/', CategoriesListView.as_view(), name='categories_list'),
-    path('categories/<int:id>/', CategoryRetrieveView.as_view(), name='category_detail'),
-    path('food-items/', FoodItemsListView.as_view(), name='food_items_list'),
-    path('categories/<int:category_id>/food-items/', FoodItemsByCategoryView.as_view(), name='food_items_by_category'),
-    path('categories/<int:category_id>/food-items/<int:food_item_id>/', FoodItemsInCategoryDetailView.as_view(), name='food_item_in_category_detail'),
-    path('food-items/search/', FoodItemsListView.as_view(), name='food_items_search'),  # New search endpoint
+    path('categories/<int:id>/', CategoryDetailView.as_view(), name='category_detail'),
+    path('food-items/', FoodItemsListView.as_view(), name='food-items-list'),
+    path('food-items/<int:id>/', FoodItemsListView.as_view(), name='food-item-detail'), 
+    path('categories/<int:category_id>/food-items/', FoodItemsListView.as_view(), name='food-items-in-category'),
+    path('categories/<int:category_id>/food-items/<int:id>/', FoodItemsListView.as_view(), name='food-item-in-category-detail'),
+    path('categories/<int:category_id>/food-items/create/', FoodItemDetailView.as_view(), name='food-item-create'),  
 ]
