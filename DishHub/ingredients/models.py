@@ -1,10 +1,18 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
 class Ingredients(models.Model):
     ingredients_id = models.AutoField(primary_key=True)
     ingredients_name = models.CharField(max_length=20)
     quantity = models.IntegerField()
+    category = models.ManyToManyField(Category, blank=True) 
+
 
     def clean(self):
         if self.quantity < 0:
@@ -17,5 +25,5 @@ class Ingredients(models.Model):
     def __str__(self):
         return f"{self.ingredients_id} {self.ingredients_name}"
 
-
 # Create your models here.
+ 
