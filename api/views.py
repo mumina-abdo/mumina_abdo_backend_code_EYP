@@ -64,6 +64,9 @@ class ShoppingListDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
+
+
 class ShoppingListItemList(generics.ListCreateAPIView):
     queryset = Shopping_list_item.objects.all()
     serializer_class = ShoppingListItemSerializer
@@ -81,6 +84,9 @@ class ShoppingListItemList(generics.ListCreateAPIView):
             return Response({"error": ve.detail}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 
