@@ -11,7 +11,7 @@ class Shopping_list(models.Model):
 
 
     def __str__(self):
-        return f"{self.shopping_list_id}"
+        return f"{self.shopping_list_id} "
 
 
 class Shopping_list_item(models.Model):
