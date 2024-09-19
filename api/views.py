@@ -25,6 +25,7 @@ class ShoppingListList(generics.ListCreateAPIView):
 
 
 
+
 class ShoppingListDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shopping_list.objects.all()
     serializer_class = ShoppingListSerializer
