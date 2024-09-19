@@ -1,5 +1,4 @@
 from rest_framework import serializers
-<<<<<<< HEAD
 from categories.models import Category, FoodItem
 
 
@@ -16,10 +15,6 @@ class CategoriesSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'updated_at', 'food_items']
 
 
-
-
-
-=======
 from ingredients.models import Ingredients
 from pantry.models import Pantry
 
@@ -32,4 +27,4 @@ class PantrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Pantry
         fields = '__all__'
->>>>>>> 401b08102d0a4c9e4f16ce3bf060a39920e85da9
+

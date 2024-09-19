@@ -37,15 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'categories',
     'api',
     'rest_framework',
-=======
     'pantry',
-    'ingredients',
-    'rest_framework'
->>>>>>> 401b08102d0a4c9e4f16ce3bf060a39920e85da9
+    'ingredients'
+
 ]
 
 MIDDLEWARE = [
