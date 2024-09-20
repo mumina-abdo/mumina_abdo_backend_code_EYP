@@ -60,3 +60,4 @@ pip-log.txt
 .pytest_cache/
 .coverage
 
+.env
