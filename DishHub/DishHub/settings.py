@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'pantry',
-    'ingredients'
+    'ingredients',
+    'recipes'
 
 ]
 
