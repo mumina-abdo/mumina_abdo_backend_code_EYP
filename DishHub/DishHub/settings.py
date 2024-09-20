@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+# 📁 webappexample/settings.py -----
+
+import os
+from dotenv import load_dotenv, find_dotenv
+
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-
-
 load_dotenv()
 
 
@@ -23,10 +27,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR = os.path.join(BASE_DIR, "Mumi", "templates")
+TEMPLATE_DIR = os.path.join(BASE_DIR, "Kuwala", "templates")
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# print(f"TEMPLATE_DIR: {TEMPLATE_DIR}")  # Add this line to check
+
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -35,7 +39,7 @@ SECRET_KEY = 'django-insecure-+f4tqm=)9qg=)p_75(^@3eni&l)%xd39uu)m0oh*(1mb20o4!h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -74,7 +78,7 @@ ROOT_URLCONF = 'DishHub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -159,14 +163,63 @@ REST_FRAMEWORK = {
     ],
 }
 
-# from datetime import timedelta
 
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-#     'ROTATE_REFRESH_TOKENS': False,
-#     'BLACKLIST_AFTER_ROTATION': True,
-# }
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 
 
+from datetime import timedelta
+
+
+
+SIMPLE_JWT = {
+    'AUTH_COOKIE': 'access_token',  # Cookie name for storing the access token
+    'AUTH_COOKIE_SECURE': False,    # Set to True in production
+    'AUTH_COOKIE_HTTP_ONLY': True,  # HTTP-only cookie to prevent JavaScript access
+    'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
+    'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
+}
+
+
+# Load environment definition file
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+
+# Load Auth0 application settings into memory
+AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
+AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID")
+AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET")
+
+
+
+
+
+AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
+
+
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = os.path.join(BASE_DIR, "DishHub", "templates")  # Adjust this path as needed
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [TEMPLATE_DIR],  # Ensure this is correct
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]

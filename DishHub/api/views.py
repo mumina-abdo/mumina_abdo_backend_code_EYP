@@ -12,8 +12,14 @@ from users.models import User
 from .serializers import UserSerializer, LoginSerializer
 import json
 import logging
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.contrib.auth import get_user_model
 
+
+User= get_user_model()
 logger = logging.getLogger(__name__)
+
+
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -35,43 +41,29 @@ class RegisterView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
-
+                
 class LoginView(APIView):
-    permission_classes = [AllowAny]         
-
     def post(self, request):
-        email = request.data.get('email')
+        email = request.data.get('username')
         password = request.data.get('password')
+        print(f"$$$${email}$$$$$$$$$$$$$$$$$$$$$$$$$$$$${password}$$$$$$$$$")
         
-        if not email or not password:
-            return Response({'error': _('Email and password are required')}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user = authenticate(username=email, password=password)
-        if user:
-            logger.info(f'User logged in successfully: {email}')
-            return Response({}, status=status.HTTP_200_OK)
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            print("*********************************")
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                 "Login successful! Welcome back!",
+            }, status=status.HTTP_200_OK)
+        return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        logger.error(f'Login failed for user: {email}')
-        return Response({'error': _('Invalid credentials')}, status=status.HTTP_401_UNAUTHORIZED)
-    
-    def get(self, request):
-        return Response({
-            'message': _('This endpoint allows users to log in using their email and password.'),
-            'usage': _('Send a POST request with "email" and "password" fields to log in.')
-        }, status=status.HTTP_200_OK)
-        
-        
 
-logger = logging.getLogger(__name__)
 
 class UserProfileUpdateView(APIView):
-    permission_classes = []  
+    def get_object(self, pk):
+        return User.objects.get(pk=pk)
 
     def get(self, request):
-        if not request.user.is_authenticated:
-            logger.warning('Attempt to retrieve profile by unauthenticated user.')
-            return Response({"detail": "Unauthorized access. Please log in."}, status=status.HTTP_401_UNAUTHORIZED)
-
         user = request.user
         serializer = UserSerializer(user)
         logger.info(f'User profile retrieved successfully: {user.email}')
@@ -86,8 +78,9 @@ class UserProfileUpdateView(APIView):
         logger.error(f'User profile update failed: {serializer.errors}')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request):
-        serializer = UserSerializer(request.user, data=request.data, partial=True)
+    def patch(self, request, pk):
+        model = self.get_object(pk)
+        serializer = UserSerializer(model, data=request.data, partial=True)
         if serializer.is_valid():
             user = serializer.save()
             logger.info(f'User profile updated successfully: {user.email}')
@@ -95,8 +88,9 @@ class UserProfileUpdateView(APIView):
         logger.error(f'User profile update failed for {request.user.email}: {serializer.errors}')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
 class UserListView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         users = User.objects.all()
@@ -106,7 +100,6 @@ class UserListView(APIView):
     
 class UserListView(APIView):
     
-    permission_classes = [IsAuthenticated]
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -119,29 +112,10 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
-@csrf_exempt
 def generate_token(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            email = data.get('email')
-
-            if not email:
-                return JsonResponse({'error': 'Email is required'}, status=400)
-
-            user, created = User.objects.get_or_create(email=email)
-
-            if created:
-                user.set_password('default_password')  # Set a default password if needed
-                user.save()
-
-            refresh = RefreshToken.for_user(user)
-
-            return JsonResponse({
-                'access': str(refresh.access_token),
-                'refresh': str(refresh),
-            })
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
+    user,created =User.objects.get_or_create(username=' ')
+    refresh = RefreshToken.for_user(user)
+    return JsonResponse({
+        'access':str(refresh.access_token),
+        'refresh':str(refresh)
+})
