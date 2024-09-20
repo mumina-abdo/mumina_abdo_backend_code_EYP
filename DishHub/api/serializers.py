@@ -15,6 +15,7 @@ class PantrySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class ShoppingListItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shopping_list_item
