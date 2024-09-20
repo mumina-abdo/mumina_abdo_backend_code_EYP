@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 from categories.models import Category, FoodItem
-
+from ingredients.models import Ingredients
+from pantry.models import Pantry
 
 class FoodItemsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,10 +16,6 @@ class CategoriesSerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name', 'updated_at', 'food_items']
 
-
-from ingredients.models import Ingredients
-from pantry.models import Pantry
-
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredients
@@ -28,3 +26,13 @@ class PantrySerializer(serializers.ModelSerializer):
         model = Pantry
         fields = '__all__'
 
+class MealSerializer(serializers.Serializer):
+    idMeal = serializers.CharField()
+    strMeal = serializers.CharField()
+    strDrinkAlternate = serializers.CharField(allow_blank=True)
+    strCategory = serializers.CharField()
+    strArea = serializers.CharField()
+    strInstructions = serializers.CharField()
+    strMealThumb = serializers.CharField()  
+    strTags = serializers.CharField(allow_blank=True)
+    strYoutube = serializers.CharField(allow_blank=True)
