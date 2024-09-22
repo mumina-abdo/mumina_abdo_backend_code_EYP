@@ -10,14 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+# 📁 webappexample/settings.py -----
+
+import os
+from dotenv import load_dotenv, find_dotenv
+
+
+import os
 from pathlib import Path
+load_dotenv()
+
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = os.path.join(BASE_DIR, "Kuwala", "templates")
+
+# print(f"TEMPLATE_DIR: {TEMPLATE_DIR}")  # Add this line to check
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-+f4tqm=)9qg=)p_75(^@3eni&l)%xd39uu)m0oh*(1mb20o4!h'
@@ -70,7 +83,7 @@ ROOT_URLCONF = 'DishHub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,6 +95,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'DishHub.wsgi.application'
 
@@ -137,3 +152,48 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REDIRECT_URL = 'http://localhost:8000/auth/'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+
+
+
+from datetime import timedelta
+
+
+
+SIMPLE_JWT = {
+    'AUTH_COOKIE': 'access_token',  # Cookie name for storing the access token
+    'AUTH_COOKIE_SECURE': False,    # Set to True in production
+    'AUTH_COOKIE_HTTP_ONLY': True,  # HTTP-only cookie to prevent JavaScript access
+    'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
+    'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
+}
+
+
+# Load environment definition file
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+
+# Load Auth0 application settings into memory
+AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN")
+AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID")
+AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET")
+
+
+
+
+
+AUTH_USER_MODEL = 'users.User'
