@@ -57,9 +57,11 @@ INSTALLED_APPS = [
     'single_sign',
     'users',
     'categories',
-    'api',
     'pantry',
     'ingredients',
+    'shopping',
+    'api',
+    'DishHub',
     'recipes'
 
 ]
