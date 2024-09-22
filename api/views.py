@@ -278,31 +278,24 @@ class ShoppingListItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
-
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             logger.info(f'User registered successfully: {user.email}')
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-        
         logger.error(f'User registration failed: {serializer.errors}')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     def get(self, request):
-        users = User.objects.all()  
-        serializer = UserSerializer(users, many=True)  
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
         logger.info('Fetched user details successfully.')
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
-                
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get('username')
         password = request.data.get('password')
         print(f"$$$${email}$$$$$$$$$$$$$$$$$$$$$$$$$$$$${password}$$$$$$$$$")
-        
         user = authenticate(request, username=email, password=password)
         if user is not None:
             print("*********************************")
@@ -346,27 +339,20 @@ class UserProfileUpdateView(APIView):
 
 
 class UserListView(APIView):
-
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    
 class UserListView(APIView):
-    
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
-
 class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
-
 def generate_token(request):
     user,created =User.objects.get_or_create(username=' ')
     refresh = RefreshToken.for_user(user)
@@ -374,7 +360,9 @@ def generate_token(request):
         'access':str(refresh.access_token),
         'refresh':str(refresh)
 })
-    
+
+
+
 
 class CategoriesView(APIView):
     def get(self, request):

@@ -1,5 +1,8 @@
 # Virtual environment (if applicable)
+<<<<<<<< HEAD:.gitignore
 
+========
+>>>>>>>> dev:DishHub/.gitignore
 # Python Bytecode Files
 __pycache__/
 *.py[cod]
@@ -16,7 +19,6 @@ staticfiles/
 # Environment Files
 .env
 *.env
-
 *.logenv/
 # Virtual Environment
 venv/
@@ -34,7 +36,6 @@ __pycache__/
 dist/
 build/
 .eggs/
-
 .eggs/
 *.bak
 *.logenv/
@@ -59,5 +60,9 @@ pip-log.txt
 .cache
 .pytest_cache/
 .coverage
+<<<<<<<< HEAD:.gitignore
 
 .env
+========
+.env
+>>>>>>>> dev:DishHub/.gitignore

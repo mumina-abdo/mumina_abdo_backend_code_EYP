@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-# import os
-# import sys
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import sys
+
 
 def main():
     """Run administrative tasks."""
