@@ -1,13 +1,7 @@
-# from django.contrib.auth.models import AbstractUser
-# # from django.db import models
-
-# class User(AbstractUser):
-#     def __str__(self):
-#         return self.first_name
 from django.contrib.auth.models import AbstractUser
-from django.db import models
+# from django.db import models
 
 class User(AbstractUser):
-    # Additional fields (if any) go here
-    class Meta:
-        app_label = 'users'  # Explicitly set app_label
+    def __str__(self):
+        return self.first_name
+    

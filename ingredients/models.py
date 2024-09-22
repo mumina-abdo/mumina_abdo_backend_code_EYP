@@ -1,13 +1,14 @@
 # Create your models here.
 from django.db import models
 from django.core.exceptions import ValidationError
+from categories.models import Category
 
 class Ingredients(models.Model):
     ingredients_id = models.AutoField(primary_key=True)
     ingredients_name = models.CharField(max_length=20)
     quantity = models.IntegerField()
-    category = models.CharField(max_length=20)
-    # category = models.ManyToManyField(category)
+    # category = models.CharField(max_length=20)
+    categories = models.ManyToManyField(Category)
 
 
     def clean(self):
