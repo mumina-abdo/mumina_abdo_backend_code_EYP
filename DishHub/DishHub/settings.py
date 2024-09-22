@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'ingredients',
     'shopping',
     'api',
-    'DishHub'
+    'DishHub',
     'recipes'
 
 ]
