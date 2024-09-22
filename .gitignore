@@ -1,8 +1,5 @@
 # Virtual environment (if applicable)
-<<<<<<<< HEAD:.gitignore
 
-========
->>>>>>>> dev:DishHub/.gitignore
 # Python Bytecode Files
 __pycache__/
 *.py[cod]
