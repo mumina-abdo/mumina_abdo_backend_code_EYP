@@ -55,7 +55,6 @@ urlpatterns = [
     path('users/login/', LoginView.as_view(), name='user-login'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('user/profile/update/<int:pk>/', UserProfileUpdateView.as_view(), name='user-profile-update'),
-    # path('', views.index, name='index'),
     path('login/', login, name='login'),
     path('callback/', callback, name='callback'),
     path('generate-token/', views.generate_token, name='generate_token'),
