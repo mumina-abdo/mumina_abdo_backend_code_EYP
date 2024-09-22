@@ -1,6 +1,8 @@
 from rest_framework  import serializers
 from django.contrib.auth.hashers import make_password
 from users.models import User
+from categories.models import Category, FoodItem
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

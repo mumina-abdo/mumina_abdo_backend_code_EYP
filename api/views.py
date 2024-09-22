@@ -274,6 +274,8 @@ class ShoppingListItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
