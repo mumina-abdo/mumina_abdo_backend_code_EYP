@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from ingredients.models import Ingredients
-from categories.models import Category  # Import Category model
-
+from categories.models import Category  
 class IngredientsModelTest(TestCase):
     def setUp(self):
         self.category = Category.objects.create(name="Baking")  
@@ -29,3 +28,15 @@ class IngredientsModelTest(TestCase):
         none_quantity_ingredient = Ingredients(ingredients_name="Butter", quantity=None)
         with self.assertRaises(ValidationError):
             none_quantity_ingredient.full_clean()
+
+    def test_quantity_validation(self):
+        valid_ingredient = Ingredients.objects.create(ingredients_name="Carrot", quantity=100)
+        valid_ingredient.categories.add(self.category)
+        
+        invalid_ingredient = Ingredients(ingredients_name="Carrot", quantity=-50)
+        with self.assertRaises(ValidationError):
+            invalid_ingredient.full_clean()
+
+
+
+
