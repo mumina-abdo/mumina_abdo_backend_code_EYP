@@ -1,29 +1,31 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .models import Ingredients
+from ingredients.models import Ingredients
+from categories.models import Category  # Import Category model
 
 class IngredientsModelTest(TestCase):
-
     def setUp(self):
-        self.ingredient = Ingredients.objects.create(
-            ingredients_name="Sugar",
-            quantity=5
+        self.category = Category.objects.create(name="Baking")  
+        self.valid_ingredient = Ingredients.objects.create(
+            ingredients_name="Flour",
+            quantity=500
         )
+        self.valid_ingredient.categories.add(self.category) 
 
-    def test_string_representation(self):
-        expected_string = f"{self.ingredient.ingredients_id} Sugar"
-        self.assertEqual(str(self.ingredient), expected_string)
+    def test_ingredients_creation(self):
+        self.assertEqual(self.valid_ingredient.ingredients_name, "Flour")
+        self.assertEqual(self.valid_ingredient.quantity, 500)
+        self.assertTrue(self.category in self.valid_ingredient.categories.all()) 
 
-    def test_ingredient_creation(self):
-        self.assertEqual(self.ingredient.ingredients_name, "Sugar")
-        self.assertEqual(self.ingredient.quantity, 5)
+    def test_ingredients_string_representation(self):
+        self.assertEqual(str(self.valid_ingredient), f"{self.valid_ingredient.ingredients_id} {self.valid_ingredient.ingredients_name}")
 
     def test_quantity_cannot_be_negative(self):
-        ingredient = Ingredients(ingredients_name="Salt", quantity=-1)
+        negative_ingredient = Ingredients(ingredients_name="Sugar", quantity=-10)
         with self.assertRaises(ValidationError):
-            ingredient.full_clean()  
+            negative_ingredient.full_clean()
 
     def test_quantity_cannot_be_none(self):
-        ingredient = Ingredients(ingredients_name="Pepper", quantity=None)
+        none_quantity_ingredient = Ingredients(ingredients_name="Butter", quantity=None)
         with self.assertRaises(ValidationError):
-            ingredient.full_clean()  
+            none_quantity_ingredient.full_clean()
