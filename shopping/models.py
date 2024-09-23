@@ -27,3 +27,5 @@ class ShoppingListItem(models.Model):
 
 
 
+
+
