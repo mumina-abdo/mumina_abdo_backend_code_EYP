@@ -2,6 +2,11 @@ from rest_framework  import serializers
 from django.contrib.auth.hashers import make_password
 from users.models import User
 from categories.models import Category, FoodItem
+from rest_framework.reverse import reverse
+from categories.models import Category, FoodItem
+from ingredients.models import Ingredients
+from pantry.models import Pantry
+from shopping.models import ShoppingList, ShoppingListItem
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,15 +25,6 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(required=True)
 
 
-
-
-
-from rest_framework import serializers
-from rest_framework.reverse import reverse
-from categories.models import Category, FoodItem
-from ingredients.models import Ingredients
-from pantry.models import Pantry
-from shopping.models import Shopping_list, Shopping_list_item
 
 
 class FoodItemsSerializer(serializers.ModelSerializer):
@@ -57,14 +53,14 @@ class PantrySerializer(serializers.ModelSerializer):
 
 class ShoppingListItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Shopping_list_item
+        model = ShoppingListItem
         fields = '__all__'
 
 class ShoppingListSerializer(serializers.ModelSerializer):
     items = ShoppingListItemSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Shopping_list
+        model = ShoppingList
         fields = '__all__'
 
 class MealSerializer(serializers.Serializer):

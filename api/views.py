@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import UserSerializer
 import json
 import logging
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -30,7 +30,7 @@ from api.serializers import IngredientSerializer, PantrySerializer
 from ingredients.models import Ingredients
 from pantry.models import Pantry
 from rest_framework.exceptions import NotFound, ValidationError
-from shopping.models import Shopping_list, Shopping_list_item
+from shopping.models import ShoppingList, ShoppingListItem
 from .serializers import ShoppingListSerializer, ShoppingListItemSerializer
 
 
@@ -145,7 +145,7 @@ class PantryDetailView(APIView):
 
 
 class ShoppingListList(generics.ListCreateAPIView):
-    queryset = Shopping_list.objects.all()
+    queryset = ShoppingList.objects.all()
     serializer_class = ShoppingListSerializer
 
     def get(self, request, *args, **kwargs):
@@ -170,7 +170,7 @@ class ShoppingListList(generics.ListCreateAPIView):
 
 
 class ShoppingListDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Shopping_list.objects.all()
+    queryset = ShoppingList.objects.all()
     serializer_class = ShoppingListSerializer
 
     def get(self, request, *args, **kwargs):
@@ -212,7 +212,7 @@ class ShoppingListDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ShoppingListItemList(generics.ListCreateAPIView):
-    queryset = Shopping_list_item.objects.all()
+    queryset = ShoppingList.objects.all()
     serializer_class = ShoppingListItemSerializer
 
     def get(self, request, *args, **kwargs):
@@ -231,14 +231,8 @@ class ShoppingListItemList(generics.ListCreateAPIView):
 
 
 
-
-
-
-
-
-
 class ShoppingListItemDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Shopping_list_item.objects.all()
+    queryset = ShoppingListItem.objects.all()
     serializer_class = ShoppingListItemSerializer
 
     def get(self, request, *args, **kwargs):
@@ -291,6 +285,9 @@ class RegisterView(APIView):
         serializer = UserSerializer(users, many=True)
         logger.info('Fetched user details successfully.')
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+    
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get('username')

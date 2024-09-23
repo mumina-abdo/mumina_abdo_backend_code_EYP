@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 # 📁 webappexample/settings.py -----
 
-import os
+
 from dotenv import load_dotenv, find_dotenv
 import dj_database_url
-
 import os
 from pathlib import Path
 load_dotenv()
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'api',
     'DishHub',
     'recipes'
-
 ]
 
 
@@ -77,7 +76,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -222,13 +221,17 @@ AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID","")
 AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET","")
 REDIRECT_URI=os.environ.get("REDIRECT_URI","")
 
-
-
-
-
-
-
-
-
-
 AUTH_USER_MODEL = 'users.User'
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kuwaladatabase',
+        'USER': 'kuwalateam',
+        'PASSWORD':'kuwala24434',
+        'HOST':'localhost',
+        'PORT':'5432',
+    }
+}

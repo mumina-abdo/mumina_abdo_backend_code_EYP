@@ -28,14 +28,14 @@ class UserModelTest(TestCase):
     def test_user_without_username(self):
         with self.assertRaises(ValidationError):
             user = User(username='', password='testpassword')
-            user.full_clean()  # This triggers validation
+            user.full_clean()  
 
     def test_user_without_password(self):
         with self.assertRaises(ValidationError):
             user = User(username='testuser2', password='')
-            user.full_clean()  # This triggers validation
+            user.full_clean()  
 
     def test_user_email_validation(self):
         with self.assertRaises(ValidationError):
             user = User(username='testuser3', password='testpassword', email='not-an-email')
-            user.full_clean()  # This triggers validation
+            user.full_clean()  
