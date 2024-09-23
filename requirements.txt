@@ -5,7 +5,7 @@ Django==5.0.7
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1 
 django-heroku==0.3.1
-dj-database-url==2.2.0
+dj-database-url== 2.2.0
 duplicity==0.8.21
 django-google-sso==7.1.0
 fasteners==0.14.1
