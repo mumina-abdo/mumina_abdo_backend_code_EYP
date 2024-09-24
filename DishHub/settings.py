@@ -27,6 +27,12 @@ from pathlib import Path
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
+
+# Load environment definition file
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+    
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, "Kuwala", "templates")
@@ -192,14 +198,10 @@ AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 
 
-from datetime import timedelta
 
 
 
-# Load environment definition file
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
+
 
 
 # Load Auth0 application settings into memory
@@ -210,10 +212,5 @@ REDIRECT_URI=os.environ.get("REDIRECT_URI","")
 
 AUTH_USER_MODEL = 'users.User'
 
-
-
-load_dotenv()  # Load environment variables from .env file
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
