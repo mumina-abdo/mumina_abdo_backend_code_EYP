@@ -19,6 +19,10 @@ import os
 from pathlib import Path
 load_dotenv()
 
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -225,13 +229,27 @@ AUTH_USER_MODEL = 'users.User'
 
 
 
+load_dotenv()  # Load environment variables from .env file
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kuwaladatabase',
-        'USER': 'kuwalateam',
-        'PASSWORD':'kuwala24434',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
+
+# Fallback for local development and test environments
+if not all([os.getenv('DATABASE_NAME'), os.getenv('DATABASE_USER'), os.getenv('DATABASE_PASSWORD')]):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
