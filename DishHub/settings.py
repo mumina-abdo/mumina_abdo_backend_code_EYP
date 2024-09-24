@@ -125,20 +125,20 @@ WSGI_APPLICATION = 'DishHub.wsgi.application'
 # }
 
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
-}
-# Fallback for local development and test environments
-if not os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL')
+#     )
+# }
+# # Fallback for local development and test environments
+# if not os.getenv('DATABASE_URL'):
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
 
 
 
@@ -205,11 +205,11 @@ from datetime import timedelta
 
 
 SIMPLE_JWT = {
-    'AUTH_COOKIE': 'access_token',  # Cookie name for storing the access token
-    'AUTH_COOKIE_SECURE': False,    # Set to True in production
-    'AUTH_COOKIE_HTTP_ONLY': True,  # HTTP-only cookie to prevent JavaScript access
-    'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
-    'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
+    'AUTH_COOKIE': 'access_token',  
+    'AUTH_COOKIE_SECURE': False,    
+    'AUTH_COOKIE_HTTP_ONLY': True,  
+    'AUTH_COOKIE_PATH': '/',        
+    'AUTH_COOKIE_SAMESITE': 'Lax',  
 }
 
 
