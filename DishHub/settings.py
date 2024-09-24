@@ -74,6 +74,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -114,12 +115,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'DishHub.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-
-# }
 
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -231,12 +226,3 @@ load_dotenv()  # Load environment variables from .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-# Fallback for local development and test environments
-if not all([os.getenv('DATABASE_NAME'), os.getenv('DATABASE_USER'), os.getenv('DATABASE_PASSWORD')]):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
