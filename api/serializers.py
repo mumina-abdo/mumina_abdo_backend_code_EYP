@@ -7,18 +7,33 @@ from categories.models import Category, FoodItem
 from ingredients.models import Ingredients
 from pantry.models import Pantry
 from shopping.models import ShoppingList, ShoppingListItem
+# from .models import User
+from django.contrib.auth.hashers import make_password
 
+
+# class UserSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(write_only=True)
+
+#     class Meta:
+#         model = User
+#         fields = ["id",'email', 'password', 'first_name', 'last_name','username', 'registration_date']  
+    
+
+#     def create(self, validated_data):
+#         validated_data['password'] = make_password(validated_data['password'])
+#         return super().create(validated_data)
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ["id",'email', 'password', 'first_name', 'last_name','username']  
-
+        fields = ["id", 'email', 'password', 'first_name', 'last_name', 'username'] 
+    
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)
+
     
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
@@ -73,3 +88,8 @@ class MealSerializer(serializers.Serializer):
     strMealThumb = serializers.CharField()  
     strTags = serializers.CharField(allow_blank=True)
     strYoutube = serializers.CharField(allow_blank=True)
+
+
+
+
+
