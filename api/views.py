@@ -279,8 +279,7 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            # created_at = models.DateTimeField(auto_now_add=True)
-            # user.save()
+          
             logger.info(f'User registered successfully: {user.email}')
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         
