@@ -1,4 +1,6 @@
 from datetime import timezone
+from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -277,8 +279,8 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            user.registration_date = timezone.now() 
-            user.save()
+            # created_at = models.DateTimeField(auto_now_add=True)
+            # user.save()
             logger.info(f'User registered successfully: {user.email}')
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         
