@@ -392,6 +392,12 @@ class CategoryDetailView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def delete(self, request, id):
+    #     category = get_object_or_404(Category, id=id)
+    #     category.delete()
+    #     return Response({"message": "Category deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
 
 class FoodItemsListView(APIView):
     def get(self, request, category_id=None):
@@ -423,6 +429,11 @@ class FoodItemDetailView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def delete(self, request, id):
+    #     food_item = get_object_or_404(FoodItem, id=id)
+    #     food_item.delete()
+    #     return Response({"message": "Food item deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 class IngredientListView(APIView):
     def get(self, request):
